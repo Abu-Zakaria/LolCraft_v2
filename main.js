@@ -34,3 +34,12 @@ function animate()
 }
 
 animate();
+
+if(WEBGL.isWebGLAvailable())
+{
+	console.log("WebGL is available");
+}
+else
+{
+	alert("WebGL ain't available, bruh!");
+}
