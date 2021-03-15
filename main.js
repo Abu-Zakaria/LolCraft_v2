@@ -1,39 +1,74 @@
+import { GLTFLoader } from '../three.js/examples/jsm/loaders/GLTFLoader.js'
+import { OrbitControls } from '../three.js/examples/jsm/controls/OrbitControls.js'
+
 const scene = new THREE.Scene();
 
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+scene.background = new THREE.Color(0x333333);
+
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
 
 const renderer = new THREE.WebGLRenderer();
 
+camera.position.set(0, 6, 10);
+camera.lookAt(0, 0, 0);
+
+const control = new OrbitControls(camera, renderer.domElement)
+
+control.update();
+
 renderer.setSize(window.innerWidth, window.innerHeight);
+
+let light = new THREE.AmbientLight(0xf3f3f3);
+scene.add(light);
+
 
 let main_playground = document.getElementById('main_playground');
 
 main_playground.appendChild(renderer.domElement);
 
-// cube
-
 const green = 0x00ff00;
 
-const geometry = new THREE.BoxGeometry();
-const material = new THREE.MeshBasicMaterial({color: green});
-const cube = new THREE.Mesh(geometry, material);
+//ground
+let groundTexture = new THREE.TextureLoader().load('./textures/ground.png')
+groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
+groundTexture.repeat.set(10, 10);
 
-scene.add(cube);
 
-camera.position.z = 5;
+let groundMaterial = new THREE.MeshStandardMaterial({map: groundTexture})
 
+let mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry(20, 20), groundMaterial );
+mesh.position.y = 0.06;
+mesh.rotation.x = - Math.PI / 2;
+scene.add(mesh);
+
+let loader = new GLTFLoader();
+
+loader.load('./textures/minecraft_grass_block/scene.gltf', (gltf) => {
+
+	// let material = new THREE.MeshPhongMaterial();
+
+	// let mesh = new THREE.Mesh(geometry, material);
+
+	// mesh.position.set(0, 0, 0);
+	// mesh.rotation.set(0, 0, 0);
+
+	renderer.outputEncoding = THREE.sRGBEncoding
+	
+
+	scene.add(gltf.scene);
+})
 
 function animate()
 {
 	requestAnimationFrame(animate);
 
-	renderer.render(scene, camera);
+	control.update();
 
-	cube.rotation.x += 0.02;
-	cube.rotation.y += 0.02;
+	renderer.render(scene, camera);
 }
 
 animate();
+
 
 if(WEBGL.isWebGLAvailable())
 {

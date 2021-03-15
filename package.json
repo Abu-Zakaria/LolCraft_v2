@@ -1,0 +1,30 @@
+{
+  "name": "lolcraft_v2",
+  "version": "1.0.0",
+  "description": "This is lolcraft v2 project",
+  "private": true,
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JakariaBlaine/LolCraft_v2.git"
+  },
+  "keywords": [
+    "game",
+    "video-game"
+  ],
+  "author": "Jakaria Blaine",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JakariaBlaine/LolCraft_v2/issues"
+  },
+  "homepage": "https://github.com/JakariaBlaine/LolCraft_v2#readme",
+  "devDependencies": {
+    "webpack": "^5.25.0",
+    "webpack-cli": "^4.5.0"
+  }
+}
